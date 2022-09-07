@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GVC2.0</title>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
+    <%- include('../partials/stylesheet.ejs') %>
+    <%- include('../partials/common-script.ejs') %>
+
+
+    <!----------레이어팝업 프로세스2----------------->
+    <script language="Javascript">
+        isIE = document.all;
+        isNN = !document.all && document.getElementById;
+        isN4 = document.layers;
+        isHot = false;
+
+        function ddInit2(e) {
+            topDog = isIE ? "BODY" : "HTML";
+            whichDog = isIE ? document.all.popWin2 : document.getElementById("popWin2");
+            hotDog = isIE ? event.srcElement : e.target;
+            while (hotDog.id != "popWin2" && hotDog.tagName != topDog) {
+                hotDog = isIE ? hotDog.parentElement : hotDog.parentNode;
+            }
+            if (hotDog.id == "popWin2") {
+                offsetx = isIE ? event.clientX : e.clientX;
+                offsety = isIE ? event.clientY : e.clientY;
+                nowX = parseInt(whichDog.style.left);
+                nowY = parseInt(whichDog.style.top);
+                ddEnabled = true;
+                document.onmousemove = dd;
+            }
+        }
+
+        function dd2(e) {
+            if (!ddEnabled) return;
+            whichDog.style.left = isIE ? nowX + event.clientX - offsetx : nowX + e.clientX - offsetx;
+            whichDog.style.top = isIE ? nowY + event.clientY - offsety : nowY + e.clientY - offsety;
+            return false;
+        }
+
+        document.onmousedown = ddInit2;
+        document.onmouseup = Function("ddEnabled=false");
+
+
+        // 쿠키 설정함!!
+        expday = new Date();
+        expday.setDate(expday.getDate() + 1);
+
+        function setCookie2(name, value, expiredays) {
+            var todayDate = new Date();
+            todayDate.setDate(todayDate.getDate() + expiredays);
+            document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+        }
+
+        function closeWin2() {
+            if (document.notice_form2.chkbox.checked) {
+                setCookie2("maindiv2", "done", 1);
+            }
+            document.all['divpop2'].style.visibility = "hidden";
+        }
+    </script>
+    <!----------레이어팝업 프로세스2----------------->
+
+    <!-- 시스템 서버 팝업창 -->
+    <div id="divpop2" style="position:absolute; left:800px; top:210px; z-index:6;visibility:hidden;"
+        onSelectStart="return false">
+        <form name="notice_form2" id="notice_form2" class="notice_form">
+            <div class="noti_pop_top_txt">
+                <div class="top_img">
+                    <strong>GVC 거래관계망 이용안내</strong>
+                </div>
+                <dl class="noti_pop_server">
+                    <br><br>
+                    <dd><span>현재 본 시스템에 인터넷 보안 프로토콜 S/W 가 설치되고 있습니다. </br>
+                        이로 인해 거래현황 및 네트워크 분석 서비스가 제공되고 있지 않습니다.   </br>                      
+                        이른 시일 내에 해당 프로토콜 S/W 설치 완료 후 해당 서비스 제공하겠습니다. </br> </br>
+                       
+                        서비스 사용에 불편을 드려서 죄송합니다. 
+                    </br>                        
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="close">
+                <div>
+                    <a href="javascript:closeWin2();" style="text-decoration:none;">
+                        <div class="cls_btn">
+                            <span style="color:#fff; font-weight:600; font-size:13px; padding-top:3px;">닫기</span>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <input type="checkbox" name="chkbox todayPop02" id="chkbox" value="1" />
+                    <label>오늘하루 이창열지 않기</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function catal_pop() {
+        }
+        cookiedata = document.cookie;
+        if (cookiedata.indexOf("maindiv2=done") < 0) {
+           //document.all['divpop2'].style.visibility = "visible";
+        }
+        else {
+            //document.all['divpop2'].style.visibility = "hidden";
+        }
+    </script>
+    <!-- //시스템 서버 팝업창 -->
+
+</head>
+
+<body>
+    <%- include('../partials/common-utils.ejs') %>
+    <header class="main-header02">
+        <h1>
+            <a href="/" class="main_logo">
+                <span class="tit">GVC</span><span class="txt">가치사슬 분석시스템</span>
+            </a>
+        </h1>
+        <ul class="main-nav-wrap02">
+            <li class="steel">
+                <span class="ontest">기계금속</span>
+                <div class="lnb_menu">
+                    <ul class="">
+                        <li productId="steel">철강</li>
+                        <li productId="rareMetal">희소금속</li>
+                        <li productId="machine">공작기계</li>
+                        <li productId="robot">로봇(제조업용로봇)</li>
+                        <li productId="serviceRobot">로봇(서비스용로봇)</li>
+                        <li productId="pav">항공(PAV)</li>
+                        <li productId="drone">항공(드론)</li>
+                        <li productId="engineExcavator">건설기계(굴착기)</li>
+                        <li productId="sic" style="display: none;">세라믹(SiC섬유)</li>
+                        <li productId="siliconNitride" style="display: none;">세라믹(질화규소)</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="semiconductor" productId="semiconductor">
+                <span>반도체</span>
+            </li>
+            <li class="display" productId="display">
+                <span>디스플레이</span>
+                <!-- <div class="lnb_menu">
+                    <ul class="">
+                        <li productId="display">OLED</li>
+                        <li>폴더블 디스플레이</li>
+                        <li>롤러블 디스플레이</li>
+                    </ul>
+                </div> -->
+            </li>
+            <li class="battery" productId="battery">
+                <span>전기/전자</span>
+            </li>
+            <li class="car">
+                <span>자동차</span>
+                <div class="lnb_menu">
+                    <ul class="">
+                        <li productId="car">내연차</li>
+                        <li productId="electricCar">전기차</li>
+                        <li productId="hydrogenCar">수소차</li>
+                        <li productId="autonomousCar">자율차</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="chemistry">
+                <span>기초화학</span>
+                <div class="lnb_menu">
+                    <ul class="">
+                        <li productId="chemistry">정밀화학</li>
+                        <li productId="fiber">섬유</li>
+                        <li productId="carbonFiber">탄소(탄소섬유)</li>
+                        <li productId="syntheticGraphite">탄소(인조흑연)</li>
+                        <li productId="fluorineCompound">석유화학(불소화합물)</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="industry" productId="">
+                <span>신산업</span>
+                <div class="lnb_menu">
+                    <ul class="">
+                        <li productId="solarBattery">태양광(태양전지)</li>
+                        <li productId="bio">바이오(항체의약품, 백신)</li>
+                    </ul>
+                </div>
+            </li>
+
+            <% if(userInfo.type!='A' ) { %>
+                <li class="100" productId="main/100Index">
+                    <span>통합100</span>
+                </li>
+                <li class="338" productId="main">
+                    <span>238품목</span>
+                </li>
+            <% } %>
+            <li class="100" productId="keyLines">
+                <span>네트워크 분석</span>
+            </li>
+            <% if(userInfo.ews_use_yn == 'Y') { %>
+                <li onclick="execEwslink();">
+                    <span>EWS</span>
+                </li>
+            <% } %>
+        </ul>
+
+        <div class="btn-danger-wrap btn-danger">
+            <button type="button">
+            </button>
+            <dl class="danger-text">
+                <dt>핵심산업 위험품목 <b>
+                        <%=dangerCount%>
+                    </b>개</dt>
+                <dd>(<%=dangerDate%> 기준)</dd>
+            </dl>
+        </div>
+        <%- include('../partials/header/nav-profile.ejs') %>
+    </header>
+    <div class="body-container02">
+        <div class="scroll-wrap02">
+            <main>
+                <section class="error-message">
+                    <%=error%>
+                </section>
+                <section class="search-section02">
+                    <div class="search">
+                        <div class="search-select-box">
+                            <label class="search-label">All</label>
+                            <select class="search-select" name="option">
+                                <option value="0" selected>All</option>
+                            </select>
+                        </div>
+                        <input type="text" class="search-input" placeholder="품목명이나 기업명을 입력해주세요." autofocus />
+                        <input type="image" class="search-icon" src="/images/icons/ic_main_select_search.png"
+                            alt="검색아이콘">
+                    </div>
+                    <ul class="search-dropdown">
+                    </ul>
+                </section>
+                <section class="dashboard-section">
+                    <ul class="dashboard-wrap">
+                        <li>
+                            <article>
+                                <div class="img_m01 dashboard-item">
+                                    <h2>기계금속<strong>Machine/Metal</strong></h2>
+                                    <span class="dashboard-select sub_list_img01">
+                                        <div class="dashboard-machine-btn-wrap">
+                                            <button class="sub_list02_list" productId="steel">철강</button>
+                                            <button class="sub_list02_list" productId="machine">공작기계</button>
+                                            <button class="sub_list02_list" productId="robot">로봇(제조업용로봇)</button>
+                                            <button class="sub_list02_list" productId="serviceRobot">로봇(서비스용로봇)</button>
+                                            <button class="sub_list02_list" productId="pav">항공(PAV)</button>
+                                            <button class="sub_list02_list" productId="drone">항공(드론)</button>
+                                            <button class="sub_list02_list" productId="rareMetal">희소금속</button>
+                                            <button class="sub_list02_list" productId="engineExcavator">건설기계(굴착기)</button>
+                                            <button class="sub_list02_list" productId="sic" style="display: none;">세라믹(SiC섬유)</button>
+                                            <button class="sub_list02_list" productId="siliconNitride" style="display: none;">세라믹(질화규소)</button>
+
+                                        </div>
+                                    </span>
+                                </div>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <div class="img_m02 dashboard-item" productId="semiconductor">
+                                    <h2>반도체<strong>Semiconductor</strong></h2>
+                                </div>
+                                <div class="img_m03 dashboard-item" productId="display">
+                                    <h2>디스플레이<strong>Display</strong></h2>
+                                    <!-- <span class="dashboard-select sub_list_img02">
+                                        <div class="dashboard-machine-btn-wrap">
+                                            <button class="sub_list02_list" >OLED</button>
+                                            <button class="sub_list02_list">폴더블 디스플레이</button>
+                                            <button class="sub_list02_list">롤러블 디스플레이</button>
+                                        </div>
+                                    </span> -->
+                                </div>
+                                <div class="img_m04 dashboard-item">
+                                    <h2>전기/전자<strong>Electricity/Electronics</strong></h2>
+                                    <span class="dashboard-select sub_list_img03">
+                                        <button class="sub_list02_list" productId="battery">이차전지</button>
+                                    </span>
+                            </article>
+                            <article>
+                                <div class="img_m05 dashboard-item">
+                                    <h2>자동차<strong>Car</strong></h2>
+                                    <span class="dashboard-select sub_list_img04">
+                                        <div class="dashboard-machine-btn-wrap">
+                                            <button class="sub_list02_list" productId="car">내연차</button>
+                                            <button class="sub_list02_list" productId="electricCar">전기차</button>
+                                            <button class="sub_list02_list" productId="hydrogenCar">수소차</button>
+                                            <button class="sub_list02_list" productId="autonomousCar">자율차</button>
+                                        </div>
+                                    </span>
+                                </div>
+
+                                <div class="img_m06 dashboard-item">
+                                    <h2>기초화학<strong>Basic Chemistry</strong></h2>
+                                    <span class="dashboard-select sub_list_img05 dashboard-select-chemistry">
+                                        <div class="dashboard-machine-btn-wrap">
+                                            <button class="sub_list02_list" productId="chemistry">정밀화학</button>
+                                            <button class="sub_list02_list" productId="fiber">섬유</button>
+                                            <button class="sub_list02_list" productId="carbonFiber">탄소(탄소섬유)</button>
+                                            <button class="sub_list02_list"
+                                                productId="syntheticGraphite">탄소(인조흑연)</button>
+                                            <button class="sub_list02_list"
+                                                productId="fluorineCompound">석유화학(불소화합물)</button>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="img_m07 dashboard-item" productId="">
+                                    <h2>신산업<strong>New Industry</strong></h2>
+                                    <span class="dashboard-select sub_list_img06">
+                                        <div class="dashboard-machine-btn-wrap">
+                                            <button class="sub_list02_list" productId="solarBattery">태양광(태양전지)</button>
+                                            <button class="sub_list02_list" productId="bio">바이오(항체의약품, 백신)</button>
+                                    </span>
+                                </div>
+                            </article>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+            <footer class="main-footer02">
+                <div class="row">
+                    <button type="button" class="btn-inquiry">담당자 문의</button>
+                    <span>&copy; 2020 Global Value Chain</span>
+                </div>
+                <div class="img-wrap">
+                    <img src="/images/logo/logo-main.png" alt="로고" />
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="company_popup" class="custom-modal"></div>
+    <div id="danger_alarm_popup" class="custom-modal light-modal"></div>
+    <div id="no_data_popup" class="custom-modal"></div>
+    <div id="contact_popup" class="custom-modal"></div>
+    <div id="auto_logout_popup" class="custom-modal"></div>
+    <% if(showPopup) { %>
+    <div id="agreement_popup">
+        <div class="header">
+            <p>공지사항</p>
+        </div>
+        <div class="content">
+            <p>가치사슬분석 시스템 관리자입니다.</p>
+            <p>본 시스템에 접속하신 사용자에게는 평가 및 테스트 목적으로 계정을 발부해 드린 것으로<br /> 해당 용도 이외의 목적으로 사용하는 것을 금지합니다.</p>
+            <p>또한, 시스템에 접속한 후에 확인되는 화면을 캡처하거나 촬영하는 것은 해당 관련 법에 위배되는 행위입니다.</p>
+            <p>이 사항에 동의하시면 Yes 를 선택해 주십시오. </p>
+        </div>
+
+        <div class="btn-grp">
+            <button class="btn" id="btn_agree"><span>Yes</span></button>
+            <button class="btn" id="btn_disagree"><a href="/logout">No</a></button>
+        </div>
+    </div>
+    <div class="dimmed"></div>
+    <%}%>
+    <%- include('../partials/search.ejs') %>
+    <script>
+        const user = JSON.parse('<%- JSON.stringify(userInfo)%>');
+        const categoryList = JSON.parse('<%- JSON.stringify(categoryList)%>');
+        const CATEGORY_PAGE_LIST = JSON.parse('<%- JSON.stringify(CATEGORY_PAGE_LIST)%>');
+
+        function execEwslink() {
+            if(user.ews_link_id.trim() == '') {
+                alertDialog('EWS 연동 아이디가 존재하지 않습니다.');
+            } else {
+                let ewsForm = document.createElement('form');
+                ewsForm.setAttribute('method','post');
+                ewsForm.setAttribute('target','_blank');
+                ewsForm.setAttribute('action','http://218.55.37.238:9000/linkLogin');
+                // ewsForm.setAttribute('action','http://127.0.0.1:9000/linkLogin');
+                document.body.appendChild(ewsForm);
+                let paramInput = document.createElement('input');
+                paramInput.setAttribute('type','hidden');
+                paramInput.setAttribute('name', 'ews_link_id');
+                paramInput.setAttribute('value', user.ews_link_id);
+                ewsForm.appendChild(paramInput);
+                ewsForm.submit();
+                ewsForm.remove();
+            }
+        }
+
+        $('.btn-danger').click(function () {
+            $('#danger_alarm_popup').bPopup({
+                speed: 250,
+                content: 'ajax',
+                loadUrl: `/alarm/main`
+            })
+        })
+
+        $('.btn-inquiry').click(function () {
+            $('#contact_popup').bPopup({
+                speed: 250,
+                content: 'ajax',
+                loadUrl: '/contact'
+            })
+        })
+
+        /** 특정 계정의 경우에만 공지사항 팝업을 출력한다.-2021/03/31 */
+        // Yes버튼 클릭 시
+        $('#btn_agree').click(function () {
+            // 팝업을 닫는다.
+            $('#agreement_popup').css('display', 'none');
+            $('.dimmed').css('display', 'none');
+        });
+
+        $(document).ready(function () {
+            let userInfoRes = JSON.parse('<%- JSON.stringify(userInfo)%>');
+            // console.log(userInfoRes)
+            setSearchCategory();
+            searchTargetHandler();
+            // disableUnauthorizedCategory();
+        });
+
+        function setSearchCategory() {
+            const selectEl = $('.search .search-select');
+
+            categoryList.forEach(cat => {
+                const option = getSelectOptionElement(cat);
+                selectEl.append(option);
+            })
+
+            function getSelectOptionElement({ category_id, name }) {
+                const optionEl = document.createElement('option');
+                optionEl.setAttribute('value', category_id);
+                optionEl.innerText = name;
+                return optionEl;
+            }
+        }
+
+        function searchTargetHandler() {
+            const selectTarget = $('.search-select-box select');
+            selectTarget.change(function () {
+                const select_name = $(this).children('option:selected').text();
+                $(this).siblings('label').text(select_name);
+            });
+        }
+
+        $(".dashboard-item").click(productClickHandler);
+        $(".dashboard-item button").click(productClickHandler);
+        $(".main-nav-wrap02 li").click(productClickHandler);
+
+        function productClickHandler(e) {
+            const currentTarget = $(e.currentTarget);
+            if (currentTarget.hasClass('disabled')) return false;
+            const target = $(e.target);
+            const page = target.context.hasAttribute('page') ? target.attr('page') : 1;
+            const productId = currentTarget.attr('productId');
+            if (!productId) return;
+
+            let queryString = '';
+            let queryStringArr = new Array();
+
+            queryStringArr.push(`page=${page}`);
+
+            if (queryStringArr.length > 0) {
+                for (let i = 0; i < queryStringArr.length; i++) {
+                    if (i == 0) queryString += `?${queryStringArr[i]}`;
+                    else queryString += `&${queryStringArr[i]}`;
+                }
+            }
+            location.href = `/${productId}${queryString}`;
+        }
+
+        const searchUrl = '/search';
+        const getSearchResultItemFromData = (result) => {
+            let url = `/${result.category_url}?selectedId=${result.product_id}`;
+            if (result.page) url += `&page=${result.page}`;
+            const category_name = result.category_name;
+            const sub_category_name = result.sub_category_name;
+            const product_name = result.product_name;
+            const company_name = result.company_name;
+            return { url, category_name, sub_category_name, product_name, company_name };
+        }
+
+        const { searchItem, closeDropDown } = search({ searchUrl, getSearchResultItemFromData });
+
+        function popupOpen(url, size) {
+            let winWidth = size === 'large' ? window.screen.width * 0.8 : 800;
+            let winHeight = 800;
+            let popupX = (window.screen.width / 2) - (winWidth / 2);
+            let popupY = (window.screen.height / 2) - (winHeight / 2);
+            let popupOption = "width=" + winWidth + ", height=" + winHeight + ",left=" + popupX + ",top=" + popupY + "scrollbars=yes";
+            window.open(url, "newWindow", popupOption);
+        }
+
+    </script>
+    <script type="text/javascript" src="/javascripts/search.js"></script>
+    <%- include('../partials/mainUserManage.ejs') %>
+</body>
+</html>
